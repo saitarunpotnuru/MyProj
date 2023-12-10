@@ -1,24 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./form.css";
-import { Navigate, useHref, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function FormComponent() {
   const [patientType, setPatientType] = useState(null);
   const navigate = useNavigate();
-  
+
   const handleSubmit = () => {
-    // Handle form submission here based on selected patientType
     if (patientType === 'inpatient') {
-      // Handle inpatient submission
       console.log('Inpatient form submitted');
       navigate('/inpatient/dashboard');
-
     } else if (patientType === 'outpatient') {
-      // Handle outpatient submission
       console.log('Outpatient form submitted');
       navigate('/patient/dashboard');
+    } else {
+      // If no patient type is selected
+      console.log('Please select a patient type');
     }
-    
+  };
+
+  const handleLogin = () => {
+    navigate('/auth/login');
+  };
+
+  useEffect(() => {
+    // Check if a patient type is not selected initially
+    if (!patientType) {
+      showLoginMessage();
+    }
+  }, [patientType]);
+
+  const showLoginMessage = () => {
+    return (
+      <p className="text-center mt-4">
+        If you are not a patient, click here to{" "}
+        <span
+          style={{ textDecoration: 'underline', cursor: 'pointer', color: 'blue' }}
+          onClick={handleLogin}
+        >
+          login
+        </span>
+      </p>
+    );
   };
 
   return (
@@ -28,10 +51,11 @@ function FormComponent() {
         backgroundImage: `url('https://www.sujosu.com/images/healthcare.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        minHeight: '100vh', // Set to full viewport height
+        minHeight: '100vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'column',
       }}
     >
       <div
@@ -40,8 +64,9 @@ function FormComponent() {
           backgroundColor: 'rgba(255, 255, 255, 0.8)',
           borderRadius: '10px',
           padding: '40px',
-          width: '80%', // Adjust card width as needed
-          maxWidth: '600px', // Max width for larger screens
+          width: '80%',
+          maxWidth: '600px',
+          marginBottom: '20px',
         }}
       >
         <h1 className="font-weight-bold text-center mb-4">
@@ -49,8 +74,7 @@ function FormComponent() {
         </h1>
         <strong className="text-center mb-4">
           Efficiency Amplified, Care Simplified
-
-          </strong>
+        </strong>
 
         <div className="form-group">
           <label className="mr-3">Patient Type:</label>&nbsp;&nbsp;&nbsp;
@@ -81,19 +105,23 @@ function FormComponent() {
             </label>
           </div>
         </div>
+        <hr/>
 
         <div className="row justify-content-center">
           <div className="col-lg-6 col-md-8 col-sm-10">
             <button
               type="button"
-              className="btn btn-info "
+              className="btn btn-info mr-2"
               onClick={handleSubmit}
-              disabled={!patientType} // Disable button if no type selected
+              disabled={!patientType}
             >
               <small className="font-weight-bold">Submit</small>
             </button>
           </div>
         </div>
+
+        {/* Display login message */}
+        {showLoginMessage()}
       </div>
     </div>
   );

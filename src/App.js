@@ -3,7 +3,6 @@ import './App.css';
 import PatientDashboard from './component/patient/dashboard';
 import { Route, Routes } from 'react-router-dom';
 import FormComponent from './component/patient/form';
-import ReceptionistComponent from './component/executive/dashboard';
 import LoginComponent from './component/auth/login';
 import SignUpComponent from './component/auth/signup';
 import AppointmentComponent from './component/patient/appointment';
@@ -13,15 +12,15 @@ import ReceptionistDashboard from './component/receptionist/dashboard';
 import DoctorDashboard from './component/doctor/dashboard';
 import PreviousAppointments from './component/patient/previousAppointments';
 import ReceptionistSignUpComponent from './component/executive/receptionistsignup';
-import UpdateComponent from './component/executive/updateDoctor';
-import UpdateReceptionist from './component/executive/updatereceptionist';
-import UpdateDoctor from './component/executive/updateDoctor';
 import DocAppointment from './component/doctor/component/myappointments';
-import InpatientComponent from './inpatient/inpatient';
+import InpatientComponent from './component/patient/inpatient/inpatient';
 import SelectdoctorComponent from './component/receptionist/doctors';
 import RoomComponent from './component/receptionist/rooms';
 import AdmitComponent from './component/receptionist/admitting';
 import AllAdmissions from './component/receptionist/alladmissions';
+import AboutUsPage from './component/patient/aboutus';
+import RegisterPatient from './component/receptionist/registerpatient';
+
 // import UpdateDoctor from './component/executive/updateDoctor';
 
 function App() {
@@ -49,6 +48,9 @@ function App() {
       
       <Routes>
 
+      <Route path="/about-us" element={<AboutUsPage />} />
+
+
       <Route path='/auth/signup'element={<SignUpComponent />}></Route>
 
 
@@ -61,6 +63,7 @@ function App() {
 
       <Route path="/receptionist/admission" element={<AllAdmissions />} />
 
+      <Route path="/register/patient" element={<RegisterPatient/>}></Route> 
 
 
 
@@ -94,6 +97,13 @@ function App() {
      <Route path="/receptionist/dashboard/:id" element={<ReceptionistDashboard />}> </Route>
 
      <Route path="/inpatient/dashboard/" element={<InpatientComponent />}> </Route>
+
+     <Route path='/all/admissions'element={<AllAdmissions />}></Route>
+
+
+
+
+     
 
 
      

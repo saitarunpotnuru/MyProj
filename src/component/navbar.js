@@ -19,7 +19,7 @@ function NavbarComponent() {
         <Nav className="me-auto">
           <Nav.Link href="#home">Home</Nav.Link>
           <Nav.Link href='/previous/appointments/:pid'>My Appointments</Nav.Link>
-          <Nav.Link href="#pricing">About Us</Nav.Link>
+          
         </Nav>
       </Container>
       {

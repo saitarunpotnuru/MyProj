@@ -1,15 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
+import { Container, Nav, Navbar, Table } from "react-bootstrap";
 import DocNavbarComponent from "../doctornavbar";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 function DocAppointment() {
   const { id } = useParams();
   const [prescription, setPrescription] = useState("");
   const [selectedAppointmentId, setSelectedAppointmentId] = useState(null);
-
   const [appointments, setAppointments] = useState([]);
+  const navigate= useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -28,11 +28,10 @@ function DocAppointment() {
   const handleAccept = (id) => {
     axios
       .put(`http://localhost:8082/doctor/updateAppointment/${id}`, {
-        status: "ACCEPTED", // Sending ACCEPTED instead of "Accepted"
+        status: "ACCEPTED",
       })
       .then((response) => {
         console.log("Appointment status updated:", response.data);
-        // If you want to update the UI, update the appointments list with the new status
         const updatedAppointments = appointments.map((appointment) => {
           if (appointment.id === id) {
             return { ...appointment, status: "ACCEPTED" };
@@ -46,15 +45,13 @@ function DocAppointment() {
       });
   };
 
-
   const handleCancel = (id) => {
     axios
       .put(`http://localhost:8082/doctor/updateAppointment/${id}`, {
-        status: "CANCELLED", // Sending CANCELLED instead of "Cancelled"
+        status: "CANCELLED",
       })
       .then((response) => {
         console.log("Appointment status updated:", response.data);
-        // If you want to update the UI, update the appointments list with the new status
         const updatedAppointments = appointments.map((appointment) => {
           if (appointment.id === id) {
             return { ...appointment, status: "CANCELLED" };
@@ -68,6 +65,14 @@ function DocAppointment() {
       });
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/auth/login');
+  };
+
+  const handleNavigate = () => {
+    navigate(`/doctor/appointments/${id}`);
+  };
 
   const handleSubmit = (id) => {
     axios
@@ -76,7 +81,6 @@ function DocAppointment() {
       })
       .then((response) => {
         console.log("Updated Prescription:", response.data);
-        // If you want to update the UI, update the appointments list with the new prescription
         const updatedAppointments = appointments.map((appointment) => {
           if (appointment.id === id) {
             return { ...appointment, prescription: prescription };
@@ -84,8 +88,8 @@ function DocAppointment() {
           return appointment;
         });
         setAppointments(updatedAppointments);
-        setPrescription(""); // Clear the prescription input after updating
-        setSelectedAppointmentId(null); // Reset selected appointment ID
+        setPrescription("");
+        setSelectedAppointmentId(null);
       })
       .catch((error) => {
         console.error("Error updating prescription:", error);
@@ -98,7 +102,29 @@ function DocAppointment() {
 
   return (
     <div>
-      <DocNavbarComponent />
+      <Navbar bg="dark" data-bs-theme="dark" className="justify-content-between">
+      <Container>
+        <Navbar.Brand href="#home"><h4>MediConnect</h4></Navbar.Brand>
+        <Nav className="me-auto">
+          <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link onClick={handleNavigate}>My Appointments</Nav.Link>  </Nav>
+      </Container>
+      {localStorage.getItem('isLoggedIn') ?
+        <React.Fragment>
+          <Navbar.Text>
+            Signed in as: <span style={{ color: "white" }}>
+              {localStorage.getItem('username')}
+            </span>
+          </Navbar.Text>
+          &nbsp;&nbsp;&nbsp;
+          <button className="btn btn-outline-info " onClick={handleLogout}>Logout</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        </React.Fragment>
+        :
+        <div style={{ display: 'flex' }}>
+          <button className="btn btn-primary btn-sm thick-color mr-2" onClick={() => navigate('/auth/login')} style={{ color: 'white' }}>Login</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+      }
+    </Navbar>
       <div
         style={{
           backgroundImage: `url('https://img.freepik.com/free-psd/hallway-emergency-room-generative-ai_587448-2157.jpg')`,
@@ -109,51 +135,36 @@ function DocAppointment() {
         }}
       >
         <h1>Previous Appointments</h1>
-        <div>
-          {appointments.length > 0 ? (
-            appointments.map((appointment, index) => (
-              <div key={index}>
-                <p>
-                  <strong>Patient Name:</strong> {appointment.patient.name}
-                </p>
-                <p>
-                  <strong>Date:</strong> {appointment.date}
-                </p>
-                <p>
-                  <strong>Time:</strong> {appointment.time}
-                </p>
-                <p>
-                  <strong>Prescription:</strong> {appointment.prescription}{" "}
-                </p>
-
-                {/* ... (existing code) */}
-                <button onClick={() => setSelectedAppointmentId(appointment.id)}>
-                Add Prescription
-              </button>
-              {selectedAppointmentId === appointment.id && (
-                <div>
-                  <input
-                    type="text"
-                    value={prescription}
-                    onChange={(e) => setPrescription(e.target.value)}
-                  />
-                  <button onClick={() => handleSubmit(appointment.id)}>
-                    Submit Prescription
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Patient Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {appointments.map((appointment, index) => (
+              <tr key={index}>
+                <td>{appointment.patient.name}</td>
+                <td>{appointment.date}</td>
+                <td>{appointment.time}</td>
+            
+                <td>{appointment.status}</td>
+                <td>
+                  <button onClick={() => handleAccept(appointment.id)}>
+                    Accept
                   </button>
-                </div>
-              )}
-                <p>
-                  <strong>Status:</strong> {appointment.status}{" "}
-                  <button onClick={() => handleAccept(appointment.id)}>Accept</button>&nbsp;&nbsp;
-                  <button onClick={() => handleCancel(appointment.id)}>Cancel</button>
-                </p>
-                <hr />
-              </div>
-            ))
-          ) : (
-            <p>No Appointments...</p>
-          )}
-        </div>
+                  <button onClick={() => handleCancel(appointment.id)}>
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </div>
     </div>
   );

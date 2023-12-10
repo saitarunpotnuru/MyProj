@@ -81,8 +81,7 @@ function PreviousAppointments() {
               <th>Doctor Name</th>
               <th>Date</th>
               <th>Time</th>
-              <th>Prescription</th>
-              <th>Fee</th>
+              
               <th>Status</th>
             </tr>
           </thead>
@@ -92,8 +91,7 @@ function PreviousAppointments() {
     <td>{appointment.doctor ? appointment.doctor.name : 'No Doctor Found'}</td>
     <td>{appointment.date}</td>
     <td>{appointment.time}</td>
-    <td>{appointment.prescription}</td>
-    <td>{appointment.fee}</td>
+    
     <td>{appointment.status}</td>
   </tr>
 ))}

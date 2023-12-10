@@ -27,6 +27,10 @@ function ReceptionistDashboard() {
     navigate(`/receptionist/doctor?pid=${patientId}`);
   };
 
+  const HandleAdmissions = ()=>{
+    navigate(`/all/admissions`);
+  }
+
   return (
    
     <div >
@@ -36,7 +40,8 @@ function ReceptionistDashboard() {
         <Navbar.Brand href="#home"><h4>MediConnect</h4></Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#pricing">All Admissions</Nav.Link>
+          <Nav.Link onClick={HandleAdmissions}>All Admissions</Nav.Link>
+          <Nav.Link onClick={() => navigate('/register/patient')}>Register Patient</Nav.Link>
         </Nav>
       </Container>
       {

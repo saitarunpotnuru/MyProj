@@ -127,3 +127,20 @@ h2{
           .form-control mb-3{
             border: 1px solid #000000
           }
+
+
+
+
+          .custom-dropdown-menu .ant-select-dropdown-menu {
+            background-color: #f0f0f0; /* Change this color to your desired background color */
+            border-radius: 5px;
+          }
+          
+          .custom-dropdown-menu .ant-select-item {
+            color: brown;
+            padding: 8px 12px;
+          }
+          
+          .custom-dropdown-menu .ant-select-item:hover {
+            background-color: #d8d8d8; 
+          }

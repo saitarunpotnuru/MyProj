@@ -84,7 +84,7 @@ function PatientDashboard() {
             ) : (
               ""
             )}
-            <Nav.Link href="#pricing">About Us</Nav.Link>
+           <Nav.Link href="/about-us">About Us</Nav.Link>
           </Nav>
         </Container>
         {localStorage.getItem("isLoggedIn") ? (

@@ -119,7 +119,8 @@ function DoctorSignUpComponent() {
                   placeholder="Qualification"
                   onChange={(e) => setQualification(e.target.value)}
                 />
-                <input type="submit" value="Sign Up" />
+                <br/>
+                
                 <div className="col-md-4"></div>
               </form>
             </div>
@@ -127,6 +128,20 @@ function DoctorSignUpComponent() {
           <Col md={7}>
             <div className="card">
               <form onSubmit={doSignUp} className="box">
+
+              <Form.Group controlId="department">
+              <Form.Label>Department:</Form.Label>
+              <AutoComplete
+                options={alldept.map(d => ({ value: d.name }))}
+                style={{ borderColor: "", maxWidth: "800px" }}
+                value={department}
+                onChange={value => setDepartment(value)}
+                placeholder="Select department"
+                className="w-100 border border-dark rounded custom-dropdown"
+                dropdownClassName="custom-dropdown-menu"
+              />
+            </Form.Group> 
+                
                 <input
                   type="time"
                   name="startTime"
@@ -157,19 +172,9 @@ function DoctorSignUpComponent() {
                   placeholder="Contact"
                   onChange={(e) => setContact(e.target.value)}
                 />
-                 <Form.Group className="mb-3">
-                  <Form.Label htmlFor="department">Department:</Form.Label>
-                <InputGroup>
-                       <AutoComplete
-                         options={alldept.map(d => ({ value: d.name }))}
-                         style={{ borderColor: "black", maxWidth: "800px" }}
-                         value={department}
-                         onChange={value => setDepartment(value)}
-                         placeholder="Select department"
-                         className="w-75 mx-auto border border-dark rounded"
-                       />
-                     </InputGroup>
-                   </Form.Group>
+                
+                   <input type="submit" value="Sign Up" />
+                   <br/>
               </form>
             </div>
           </Col>
@@ -181,6 +186,10 @@ function DoctorSignUpComponent() {
 }
 
 export default DoctorSignUpComponent;
+
+
+
+
 
 
 
