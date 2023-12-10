@@ -17,7 +17,11 @@ import UpdateComponent from './component/executive/updateDoctor';
 import UpdateReceptionist from './component/executive/updatereceptionist';
 import UpdateDoctor from './component/executive/updateDoctor';
 import DocAppointment from './component/doctor/component/myappointments';
-import { AdmissionForm } from './admission/addmission';
+import InpatientComponent from './inpatient/inpatient';
+import SelectdoctorComponent from './component/receptionist/doctors';
+import RoomComponent from './component/receptionist/rooms';
+import AdmitComponent from './component/receptionist/admitting';
+import AllAdmissions from './component/receptionist/alladmissions';
 // import UpdateDoctor from './component/executive/updateDoctor';
 
 function App() {
@@ -44,9 +48,19 @@ function App() {
       
       
       <Routes>
-      <Route path="/update-doctor/:id" element={<UpdateComponent/>}></Route> 
 
       <Route path='/auth/signup'element={<SignUpComponent />}></Route>
+
+
+      <Route  path="/receptionist/doctor" element={<SelectdoctorComponent />} />
+
+      <Route path="/receptionist/room" element={<RoomComponent />} />
+
+      <Route path="/receptionist/admit" element={<AdmitComponent />} />
+      <Route path="/receptionist/dashboard" element={<ReceptionistDashboard/>}></Route> 
+
+      <Route path="/receptionist/admission" element={<AllAdmissions />} />
+
 
 
 
@@ -60,7 +74,6 @@ function App() {
 
      <Route path="/patient/dashboard/:id" element={<PatientDashboard/>}></Route>  
 
-     <Route path="/receptionist/dashboard" element={<ReceptionistDashboard/>}></Route> 
 
      <Route path="/executive/dashboard/:id" element={<ExecutiveComponent />}></Route> 
 
@@ -80,7 +93,10 @@ function App() {
 
      <Route path="/receptionist/dashboard/:id" element={<ReceptionistDashboard />}> </Route>
 
-     <Route path='/admit/patient/:pid/:did/:rid' element={<AdmissionForm/>} />
+     <Route path="/inpatient/dashboard/" element={<InpatientComponent />}> </Route>
+
+
+     
 
 
 

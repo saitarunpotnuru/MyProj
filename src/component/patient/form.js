@@ -11,7 +11,7 @@ function FormComponent() {
     if (patientType === 'inpatient') {
       // Handle inpatient submission
       console.log('Inpatient form submitted');
-      navigate('/receptionist/dashboard');
+      navigate('/inpatient/dashboard');
 
     } else if (patientType === 'outpatient') {
       // Handle outpatient submission
