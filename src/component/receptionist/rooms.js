@@ -44,8 +44,8 @@ function RoomComponent() {
       <Container>
         <Navbar.Brand href="#home"><h4>MediConnect</h4></Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link onClick={HandleAdmissions}>All Admissions</Nav.Link>
+        <Nav.Link onClick={() => navigate('/receptionist/dashboard/')}>Home</Nav.Link> 
+                  <Nav.Link onClick={HandleAdmissions}>All Admissions</Nav.Link>
         </Nav>
       </Container>
       {
@@ -75,7 +75,7 @@ function RoomComponent() {
     }}>
       
       <h3>Rooms List</h3>
-      <Table>
+      <Table striped bordered hover size="sm" style={{ maxWidth: "800px", margin: "auto" }}>
         <thead>
           <tr>
             <th>ID</th>

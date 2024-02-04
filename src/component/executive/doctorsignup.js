@@ -1,8 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { Form, InputGroup, Col, Row } from "react-bootstrap";
+import { Form, InputGroup, Col } from "react-bootstrap";
+import Select from "react-select";
 import { AutoComplete } from "antd";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardSubtitle,
+  CardTitle,
+  Container,
+  Nav,
+  Navbar,
+  Row,
+} from "react-bootstrap";
 
 function DoctorSignUpComponent() {
   const [name, setName] = useState('');
@@ -20,6 +32,15 @@ function DoctorSignUpComponent() {
   const [department, setDepartment] = useState('');
   const [alldept, setAlldept] = useState([]);
   const navigate = useNavigate();
+ 
+
+  const handleDepartmentChange = (selectedOption) => {
+    setDepartment(selectedOption);
+  };
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/auth/login');
+  };
 
   useEffect(() => {
     axios.get('http://localhost:8082/department/get')
@@ -60,20 +81,60 @@ function DoctorSignUpComponent() {
 
   return (
     <div
-      style={{
-        backgroundImage: `url('https://wallpaperaccess.com/full/1282799.jpg')`,
-        backgroundSize: "cover",
-        minHeight: "200vh",
-        paddingTop: "60px",
-        backgroundAttachment: "fixed",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "flex-start"
-      }}
-    >
-      <div className="container">
-        <Row className="gx-1">
-          <Col md={5}>
+    
+  >
+    <Navbar
+        bg="dark"
+        data-bs-theme="dark"
+        className="justify-content-between"
+      >
+        <Container>
+          <Navbar.Brand href="#home">
+            <h4>MediConnect</h4>
+          </Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link href="#home">home</Nav.Link>
+            <Nav.Link href="#features">about us</Nav.Link>
+          </Nav>
+        </Container>
+        {localStorage.getItem("isLoggedIn") ? (
+          <React.Fragment>
+            <Navbar.Text>
+              Signed in as:{" "}
+              <span style={{ color: "white" }}>
+                {localStorage.getItem("username")}
+              </span>
+            </Navbar.Text>
+            &nbsp;&nbsp;&nbsp;
+            <button className="btn btn-outline-info " onClick={handleLogout}>
+              Logout
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+          </React.Fragment>
+        ) : (
+          <div style={{ display: "flex" }}>
+            <button
+              className="btn btn-primary btn-sm thick-color mr-2"
+              onClick={() => navigate("/auth/login")}
+              style={{ color: "white" }}
+            >
+              Login
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button
+              className="btn btn-success btn-sm thick-color"
+              onClick={() => navigate("/auth/signup")}
+              style={{ color: "white" }}
+            >
+              Signup
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+        )}
+      </Navbar>
+    <div className="container">
+      <Row className="gx-1">
+        <Col md={5}>
             <div className="card">
               <form onSubmit={doSignUp} className="box" style={{marginRight:50}}>
                 <h1>Sign Up</h1>
@@ -129,18 +190,24 @@ function DoctorSignUpComponent() {
             <div className="card">
               <form onSubmit={doSignUp} className="box">
 
-              <Form.Group controlId="department">
-              <Form.Label>Department:</Form.Label>
-              <AutoComplete
-                options={alldept.map(d => ({ value: d.name }))}
-                style={{ borderColor: "", maxWidth: "800px" }}
-                value={department}
-                onChange={value => setDepartment(value)}
-                placeholder="Select department"
-                className="w-100 border border-dark rounded custom-dropdown"
-                dropdownClassName="custom-dropdown-menu"
-              />
-            </Form.Group> 
+              <Form.Group>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+      <Select
+        options={alldept.map((d) => ({ value: d.name, label: d.name }))}
+        value={department}
+        onChange={handleDepartmentChange}
+        placeholder="Select department"
+        styles={{
+          control: (provided) => ({
+            ...provided,
+            maxWidth: "500px",
+            border: "1px solid #ced4da",
+          }),
+        }}
+      />
+    </div>
+    </Form.Group>
+
                 
                 <input
                   type="time"

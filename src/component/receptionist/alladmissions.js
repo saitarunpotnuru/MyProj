@@ -35,7 +35,7 @@ function AllAdmissions(){
         <Container>
           <Navbar.Brand href="#home"><h4>MediConnect</h4></Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link onClick={() => navigate('/receptionist/dashboard/')}>Home</Nav.Link>  
             <Nav.Link onClick={HandleAdmissions}>All Admissions</Nav.Link>
           </Nav>
           {localStorage.getItem('isLoggedIn') ? (
@@ -55,7 +55,9 @@ function AllAdmissions(){
         </Container>
       </Navbar>
       
-        
+      
+      
+       
         <div style={{
             backgroundImage: `url('https://img.freepik.com/free-psd/hallway-emergency-room-generative-ai_587448-2157.jpg')`,
             backgroundSize: 'cover',
@@ -67,37 +69,38 @@ function AllAdmissions(){
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            minHeight: '100vh', // Adjust to set minimum height as per your design
+            minHeight: '100vh', 
           }}>
-            <Col md={{ span: 6, offset: 3 }}>
-            <Card bg="secondary" text="white" style={{ width: '70%' }}>
-        <Card.Header style={{ backgroundColor: 'gray', color: '#fff', fontSize: '140%' }}>All Admissions</Card.Header>
-                    <Card.Body>
-                    <Table striped bordered hover variant="dark" style={{ margin: 'auto' }}>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>ID</th>
-                                    <th>Admit Date</th>
-                                    <th>Discharge Date</th>
-                                    {/* Add more table headers as needed */}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {list.map((admission, index) => (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>{admission.id}</td>
-                                        <td>{admission.admittedDate}</td>
-                                        <td>{admission.dischargeDate}</td>
-                                        {/* Add more table cells with admission data */}
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </Table>
-                    </Card.Body>
-                </Card>
-            </Col>
+           <Card style={{ width: '800px', margin: 'auto', padding: '20px' }}>
+          <h1 style={{ textAlign: 'center' }}>All Admissions</h1>
+            
+        <Table striped bordered hover size="sm" style={{ maxWidth: "800px", margin: "auto" }}>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Patient ID</th>
+      <th>Patient name</th>
+      <th>Doctor name</th>
+      <th>Admit Date</th>
+      <th>Discharge Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {list.map((admission, index) => (
+      <tr key={index}>
+        <td>{index + 1}</td>
+        <td>{admission.id}</td>
+        <td>{admission.patient.name}</td>
+        <td>{admission.doctor.name}</td>
+        <td>{admission.admittedDate}</td>
+        <td>{admission.dischargeDate}</td>
+      </tr>
+    ))}
+  </tbody>
+</Table>
+             </Card>    
+              
+            
         </div>
         </div>
         </div>

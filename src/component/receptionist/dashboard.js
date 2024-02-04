@@ -70,45 +70,47 @@ function ReceptionistDashboard() {
       backgroundAttachment: 'fixed',
     }}>
 
-      <Container>
+     
         <div
           
         >
           <h1>Receptionist Dashboard</h1>
+          <br/>
 
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Gender</th>
-                <th>Contact</th>
-                <th>select</th>
-              </tr>
-            </thead>
-            <tbody>
-              {patients.map((patient) => (
-                <tr key={patient.id}>
-                  <td>{patient.id}</td>
-                  <td>{patient.name}</td>
-                  <td>{patient.age}</td>
-                  <td>{patient.gender}</td>
-                  <td>{patient.contact}</td>
-                  <td>
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => handleDoctorClick(patient.id)}
-                    >
-                      Admit
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <Table striped bordered hover size="sm" style={{ maxWidth: "800px", margin: "auto" }}>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Gender</th>
+      <th>Contact</th>
+      <th>select</th>
+    </tr>
+  </thead>
+  <tbody>
+    {patients.map((patient) => (
+      <tr key={patient.id}>
+        <td>{patient.id}</td>
+        <td>{patient.name}</td>
+        <td>{patient.age}</td>
+        <td>{patient.gender}</td>
+        <td>{patient.contact}</td>
+        <td>
+          <button
+            className="btn btn-primary"
+            onClick={() => handleDoctorClick(patient.id)}
+          >
+            Admit
+          </button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</Table>
+
         </div>
-      </Container>
+      
     </div>
     </div>
   );
